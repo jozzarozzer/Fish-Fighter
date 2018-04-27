@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383dc019721431945a354b73f09958a8, type: 3}
+  m_Name: Tinier Fish
+  m_EditorClassIdentifier: 
+  quality: 0
+  fishType: Tinier Fish
+  patternArray:
+  - {fileID: 1877430971186548, guid: f0c9909b29a9e5540b9192de10a834a4, type: 2}
+  reward: 80

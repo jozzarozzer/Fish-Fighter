@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f7c0ca57032cf4eb9f5810e6402ac1, type: 3}
+  m_Name: Rod2
+  m_EditorClassIdentifier: 
+  rodType: Smelly Rod
+  level: 2
+  castStrength: 20
+  price: 500
