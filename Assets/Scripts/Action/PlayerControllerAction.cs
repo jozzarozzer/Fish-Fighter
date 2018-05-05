@@ -48,6 +48,9 @@ public class PlayerControllerAction : MonoBehaviour {
     bool currentlyShooting;
     public float gunRecoil;
     public int gunEnergyCost;
+    int ammoCurrent;
+    public float timeSinceShot;
+    public float reloadingProgress;
 
     bool invincible;
     public float invincibilityTime;
@@ -95,6 +98,15 @@ public class PlayerControllerAction : MonoBehaviour {
 
         trail.startColor = Color.clear;
         trail.endColor = Color.clear;
+
+        reloadingProgress = 1;
+        ammoCurrent = gun.ammoMax;
+        timeSinceShot = 0;
+    }
+
+    void OnEnable()
+    {
+        reloadingProgress = 1;
     }
 
     void Update()
@@ -141,13 +153,27 @@ public class PlayerControllerAction : MonoBehaviour {
 
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            if (CanAttack1())
-            {
-                Attack1();
+            if (CanAttack())
+            {               
+                if (gun.canHold == false && currentlyShooting)
+                {
+                    //do nothing
+                }
+                else
+                {
+                    Attack();
+                }
+                currentlyShooting = true;
             }
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            currentlyShooting = false;
+        }
+
+        Debug.Log(timeSinceShot);
     }
 
     void Die()
@@ -203,7 +229,7 @@ public class PlayerControllerAction : MonoBehaviour {
             {
                 print("E damaged");
                 invincible = true;
-                takeDamage(enemyScript.enemyData.damage);
+                TakeDamage(enemyScript.enemyData.damage);
             }
             else
             {
@@ -232,7 +258,7 @@ public class PlayerControllerAction : MonoBehaviour {
         invincible = false;
     }
 
-    void takeDamage(int damage)
+    void TakeDamage(int damage)
     {
         StartCoroutine(Invincibility());
         health -= damage;
@@ -315,20 +341,18 @@ public class PlayerControllerAction : MonoBehaviour {
     {
         checkNum = 0;
         if (!currentlyDashing) checkNum++;
-        if (!currentlyShooting) checkNum++;
 
-        if (checkNum == 2) return true;
+        if (checkNum == 1) return true;
         else return false;
     }
 
-    bool CanAttack1() //Checks if the player is able to use Attack1. 
+    bool CanAttack() //Checks if the player is able to use Attack1. 
     {
         checkNum = 0;
         if (energy >= gunEnergyCost) checkNum++;
         if (!currentlyDashing) checkNum++;
-        if (!currentlyShooting) checkNum++;
 
-        if (checkNum == 3) return true;
+        if (checkNum == 2) return true;
         else return false;
     }
 
@@ -358,24 +382,70 @@ public class PlayerControllerAction : MonoBehaviour {
         }
     }
 
-    void Attack1()
+    IEnumerator AttackTimeTracker()
     {
-        Vector3 projectileVelocity = mousePosition - transform.position;
+        float loopTime = 0.005f;
+        timeSinceShot += loopTime;
+        while (timeSinceShot != 0)
+        {
+            yield return new WaitForSeconds(loopTime);
+            if (timeSinceShot != 0)
+            {
+                timeSinceShot += loopTime;
+            }
+            if (timeSinceShot >= gun.fireRate)
+            {
+                timeSinceShot = 0;
+                break;
+            }
+        }
+        yield break;
+    }
 
-        Recoil(gunRecoil);
-        UseEnergy(gunEnergyCost);
+    void Attack()
+    {
+        if (timeSinceShot != 0 || reloadingProgress != 1)
+        {
+            return;
+        }
+        else if (timeSinceShot == 0 && reloadingProgress == 1)
+        {
+            StartCoroutine(AttackTimeTracker());
+
+            ammoCurrent -= 1;
+
+            Vector3 projectileDirection = mousePosition - transform.position;
+
+            Recoil(gunRecoil);
+            UseEnergy(gunEnergyCost);
 
 
-        GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-        projectile.GetComponent<ProjectileScript>().SetVelocity(projectileVelocity);
-        projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
-        projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10;
+            GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+            projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
+            projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+            projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10;
 
-        StartCoroutine(Screenshake());
+            StartCoroutine(Screenshake());
 
+            if (ammoCurrent <= 0 && reloadingProgress == 1)
+            {
+                StartCoroutine(Reload());
+            }
+        }
+    }
 
+    IEnumerator Reload()
+    {
+        reloadingProgress = 0;
+        float loopCount = 20;
+        for (int i = 0; i < loopCount; i++)
+        {
+            reloadingProgress += 1 / loopCount;
+            yield return new WaitForSecondsRealtime(gun.reloadTime / loopCount);
+        }
+        reloadingProgress = 1;
+        ammoCurrent = gun.ammoMax;
 
-        //projectile.GetComponent<ProjectileScript>().attackCollidersOn = true;
     }
 
     IEnumerator Screenshake()

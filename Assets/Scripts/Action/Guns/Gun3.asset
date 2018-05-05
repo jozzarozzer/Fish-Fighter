@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Name: Gun3
   m_EditorClassIdentifier: 
   gunType: Slugger
-  fireRate: 1
+  fireRate: 0.3
   recoil: 20
   price: 1500
   level: 3
+  ammoMax: 6
+  reloadTime: 2
+  canHold: 0
   bulletType: {fileID: 11400000, guid: b40ce94d705ab6a44a238d3bdeccbf30, type: 2}

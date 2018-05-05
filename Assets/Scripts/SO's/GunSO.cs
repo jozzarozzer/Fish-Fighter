@@ -10,6 +10,10 @@ public class GunSO : ScriptableObject
     public float recoil;
     public int price;
     public int level;
+    public int ammoMax;
+    public int reloadTime;
+
+    public bool canHold;
 
     public BulletSO bulletType;
 }

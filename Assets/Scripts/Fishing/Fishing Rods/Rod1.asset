@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rodType: Dinky Rod
   level: 1
-  castStrength: 10
+  castStrength: 20
   price: 0

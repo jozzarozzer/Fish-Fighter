@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Name: Gun4
   m_EditorClassIdentifier: 
   gunType: Cannon
-  fireRate: 0.5
+  fireRate: 0.75
   recoil: 40
   price: 3000
   level: 4
+  ammoMax: 1
+  reloadTime: 1
+  canHold: 0
   bulletType: {fileID: 11400000, guid: ed1efbd33aab3904f89876e9f678ad2a, type: 2}

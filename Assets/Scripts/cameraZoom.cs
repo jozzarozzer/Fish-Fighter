@@ -23,7 +23,7 @@ public class cameraZoom : MonoBehaviour {
         {
             float rodLevel = rod.level;
             float sizeDifference = maxSize - minSize;
-            float levelNormalized = (rodLevel - 1) / 3;
+            float levelNormalized = rodLevel < 5 ? (rodLevel - 1) / 3 : 1;
 
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, minSize + sizeDifference * levelNormalized, 0.1f);
         }

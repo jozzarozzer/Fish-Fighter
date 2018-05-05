@@ -5,54 +5,93 @@ using UnityEngine.UI;
 
 public class playerController : MonoBehaviour
 {
-    GameObject UI;
-
-    public LineRenderer lineRenderer;
-
-    public GameObject lineStart;
-
-    public LayerMask groundMask;
-    Vector3 mousePosition; //position that the mouse ray collides with the ground.
-
-    public GameObject caster;
-    public GameObject rodModel;
+    [Header("Game Control")]
     public GameObject gameController;
     GameController gameControllerScript;
+
+
+    [Header("UI")]
+    GameObject UI;
     UIReference UIReferenceScript;
+    public BoolVariable UIopen;
+
+
+    [Header("Player")]
+    public GameObject rodModel;
+    public FishingRodSO fishingRod;
+    public RodArrayVariable playerRods;
+    public TrailRenderer rodTrail;
+
+    [Space]
+
+    public LineRenderer fishingLine;
+    public GameObject lineStart;
+    public float fishingLineInitialWidth;
+
+    [Space]
+
+    public GameObject caster;
+    public GameObject casterRodPosition;
+    bool casterOnRod;
+
+    [Space]
+
+    public GunSO gun;
+    public GunArrayVariable playerGuns;
+
+    [Space]
+
+    bool canRotate;
+
+
+    [Header("Casting")]
+    bool canCast;
 
     public float castStrength;
     public float castModifier;
+    public float castAngle;
+
+    [Space]
 
     Vector3 castDestination;
     Vector3 castDirection;
-    Vector3 positionLevelled;
-    Vector3 initialRotation;
+    Vector3 castDifference;
     Vector3 casterStartPosition;
-    Vector3 initialPosition;
 
-    public Camera cam;
+    [Space]
+
+    Vector3 positionLevelled;
+    Vector3 initialRotation;   
+    Vector3 initialPosition;
+    
+    [Space]
+
+    public LineRenderer arcIndicator;
+
+    [Space]
+
+    public LayerMask groundMask;
+    Vector3 mousePosition; //position that the mouse ray collides with the ground.
 
     ZoneSO waterZone;
 
     FishSO fishCaught;
 
-    public FishingRodSO fishingRod;
-    public RodArrayVariable playerRods;
+    [Header("Camera")]
+    public Camera cam;
+    public Vector3 camOffset;
+    public Vector3 camTarget;
 
-    public GunSO gun;
-    public GunArrayVariable playerGuns;
-
-    public BoolVariable UIopen;
-
+    [Header("Audio")]
     public AudioSource audioSource;
 
-    bool canCast;
-    bool canRotate;
-
-	void Start ()
+    void Start ()
     {
         canCast = true;
         canRotate = true;
+        casterOnRod = true;
+
+        rodTrail.enabled = false;
         gameControllerScript = gameController.GetComponent<GameController>();
         UIReferenceScript = gameControllerScript.UIReference.GetComponent<UIReference>();
 
@@ -60,13 +99,20 @@ public class playerController : MonoBehaviour
         initialPosition = transform.position;
         casterStartPosition = caster.transform.localPosition;
 
-	}
-	
-	void Update ()
-    {
+        camOffset = cam.transform.position - transform.position;
+        camTarget = cam.transform.position - camOffset;
 
-        lineRenderer.SetPosition(0, lineStart.transform.position);
-        lineRenderer.SetPosition(1, caster.transform.position);
+        fishingLineInitialWidth = fishingLine.widthMultiplier;
+    }
+
+    void Update()
+    {
+        if (casterOnRod)
+        {
+            caster.transform.position = casterRodPosition.transform.position;
+        }
+
+        SetFishingLine();
 
         DetermineMousePosition();
 
@@ -90,7 +136,28 @@ public class playerController : MonoBehaviour
             }
         }
 
-	}
+        LerpCam();
+
+    }
+
+    void LerpCam()
+    {
+        Vector3 currentFollowedPosition = transform.position - camOffset;
+        float distanceToTarget = (camTarget - currentFollowedPosition).magnitude;
+
+        cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget + camOffset, 0.2f);
+    }
+
+    void SetFishingLine()
+    {
+        fishingLine.SetPosition(0, lineStart.transform.position);
+        fishingLine.SetPosition(1, caster.transform.position);
+
+        if (fishingRod != null)
+        {
+            fishingLine.widthMultiplier = fishingRod.level * fishingLineInitialWidth;
+        }
+    }
 
     IEnumerator NoRod()
     {
@@ -176,6 +243,7 @@ public class playerController : MonoBehaviour
         slider.value = 0;
         sliderObj.SetActive(true);
 
+
         for (float t = 0; t < castingTime; t += loopTime)
         {
             if (modUp)
@@ -183,6 +251,7 @@ public class playerController : MonoBehaviour
                 if (castModifier < 1)
                 {
                     castModifier += 0.03f;
+                    //castAngle
                     slider.value += 0.03f;
                 }
                 else modUp = false;
@@ -211,44 +280,128 @@ public class playerController : MonoBehaviour
                 break;
             }
 
+            castAngle = castModifier * Mathf.PI / 2;
+            castDestination = positionLevelled + (castDirection * castStrength * castModifier * fishingRod.level);
+            castDifference = castDestination - caster.transform.position;
+
+
+            Vector3 castDestinationMax = positionLevelled + (castDirection * castStrength * 1 * fishingRod.level);
+            Vector3 camWTVP = cam.WorldToViewportPoint(castDestinationMax);
+            if (!(camWTVP.x > 0 && camWTVP.y > 0 && camWTVP.x < 1 && camWTVP.y < 1))
+            {               
+                camTarget = castDestination;
+            }
+
+            arcIndicator.enabled = true;
+            ArcIndicator();
+
             yield return new WaitForSeconds(loopTime);
         }
+
+        arcIndicator.enabled = false;
+        StartCoroutine(SwingRod());   
+    }
+
+
+    void ArcIndicator()
+    {
+        //Vector3 castDestinationMax = positionLevelled + (castDirection * castStrength * fishingRod.level);
+        //Vector3 castDifferenceMax = castDestinationMax - caster.transform.position;
+
+        int loopCount = Mathf.RoundToInt(castDifference.magnitude); //=100
+        Vector3 linePos;
+        Vector3 startPos = caster.transform.position;
+
+        arcIndicator.positionCount = loopCount;
+        arcIndicator.endColor = new Color(1,(castModifier -1) * -1, (castModifier - 1) * -1, 1);
+
+        for (int i = 0; i < loopCount; i++)
+        {
+            linePos = i * (castDifference / loopCount);
+            float yArc = -(i * i) + (i * (loopCount - 1));
+            Vector3 pointPos = startPos + new Vector3(linePos.x, linePos.y + yArc/100, linePos.z);
+            arcIndicator.SetPosition(i, pointPos);
+            
+        }
+    }
+
+    IEnumerator SwingRod()
+    {
+        float targetAngle = -150;
+        float angleDifference = targetAngle - 0;
+        float loopCount = 30;
+
+        for (int j = 0; j < loopCount; j++)
+        {
+            float rotationX = (angleDifference / loopCount);
+            Vector3 rotationVector = new Vector3(rotationX, 0, 0);
+            rodModel.transform.Rotate(rotationVector);
+            yield return new WaitForSeconds(0.03f/loopCount);
+        }
+
+        targetAngle = 0;
+        angleDifference = targetAngle - -150;
+        bool hasCast = false;
+
+        float loopCount2 = loopCount / 5;
+
+        for (int k = 0; k < loopCount2; k++)
+        {
+            rodTrail.enabled = true;
+            float rotationX = (angleDifference / loopCount2);
+            Vector3 rotationVector = new Vector3(rotationX, 0, 0);
+            rodModel.transform.Rotate(rotationVector);
+            if (k >= loopCount2/3 && !hasCast)
+            {
+                hasCast = true;
+                castDifference = castDestination - caster.transform.position;
+                StartCoroutine(Cast());                
+                print("cast");
+            }
+            yield return new WaitForSeconds(0.03f/loopCount2);
+        }
         
-        StartCoroutine(Cast());      
+
     }
 
     IEnumerator Cast()
     {
-        castDestination = positionLevelled + (castDirection * castStrength * castModifier * fishingRod.level);
+        print("cast start");
+        casterOnRod = false;
+        //Vector3 castDestinationMax = positionLevelled + (castDirection * castStrength * fishingRod.level);
+        //Vector3 castDifferenceMax = castDestinationMax - caster.transform.position;
 
-        Vector3 castDifference = castDestination - caster.transform.position;
-        int loopCount = 10;
+        int loopCount = Mathf.RoundToInt(castDifference.magnitude); //=100
+        Vector3 linePos; //keeps track of the position the caster would be in if it were not adding the quadratic lower down.
+        Vector3 startPos = caster.transform.position;
 
-        audioSource.Play();
+        //audioSource.Play();
         for (int i = 0; i < loopCount; i++)
         {
-            //caster.transform.position = Vector3.Lerp(caster.transform.position, castDestination, 0.1f);
-            caster.transform.position += castDifference / loopCount;
+            linePos = i * (castDifference / loopCount);
+            float yArc = -(i * i) + (i * (loopCount-1));
+            caster.transform.position = startPos + new Vector3(linePos.x, linePos.y + yArc/100, linePos.z);
+
             yield return new WaitForSeconds(0.01f);
         }
         
 
         waterZone = CheckZone(); //checks for the ZoneSO of the water zone that the mouse ray collided with and then set waterZone to it
+        if (waterZone == null)
+        {
+            ReInitialize();
+            yield break;
+        }
 
         SpawnFish();
+        if (fishCaught == null)
+        {
+            ReInitialize();
+            yield break;
+        }
 
-        if (fishCaught != null)
-        {
-            StartCoroutine(Transition());
-        }
-        else
-        {
-            canCast = true;
-            canRotate = true;
-            caster.transform.localPosition = casterStartPosition;
-            audioSource.Stop(); //stops the casting sound
-            transform.position = initialPosition;
-        }
+        StartCoroutine(Transition());
+        print("cast end");
     }
 
     IEnumerator Transition()
@@ -293,16 +446,12 @@ public class playerController : MonoBehaviour
         {           
             transform.position += moveDifference / loopCount;
             transform.LookAt(castDestination);
-            rodModel.transform.LookAt(castDestination);
+            //rodModel.transform.LookAt(castDestination);
             caster.transform.position = castDestination;
             yield return new WaitForSeconds(0.005f);
         }
 
-        canCast = true;
-        canRotate = true;
-        caster.transform.localPosition = casterStartPosition;
-        audioSource.Stop(); //stops the casting sound
-        transform.position = initialPosition;
+        ReInitialize();
 
         gameController.GetComponent<GameController>().SwitchGame();
 
@@ -313,6 +462,18 @@ public class playerController : MonoBehaviour
         gameControllerScript.patternSpawner.GetComponent<PatternSpawnerController>().SpawnPattern(chosenPattern);
 
         fishCaught = null; //resets fish caught
+    }
+
+    void ReInitialize()
+    {
+        canCast = true;
+        canRotate = true;
+        casterOnRod = true;
+        rodTrail.enabled = false;
+        caster.transform.localPosition = casterStartPosition;
+        audioSource.Stop(); //stops the casting sound
+        transform.position = initialPosition;
+        camTarget = transform.position;
     }
 
     void SpawnFish()
@@ -326,7 +487,7 @@ public class playerController : MonoBehaviour
 
     ZoneSO CheckZone()
     {
-        Vector3 rayStart = SetY(castDestination, castDestination.y + 10);
+        Vector3 rayStart = SetY(caster.transform.position, caster.transform.position.y + 10);
         RaycastHit hit;
         if (Physics.Raycast(rayStart, Vector3.down, out hit))
         {
@@ -337,13 +498,13 @@ public class playerController : MonoBehaviour
             }
             else
             {
-                print("failed checkZone second");
+                Debug.Log("failed checkZone second");
                 return null;
             }
         }
         else
         {
-            print("failed checkZone first");
+            Debug.Log("failed checkZone first");
             return null;
         }
     }
@@ -362,7 +523,7 @@ public class playerController : MonoBehaviour
             transform.LookAt(hitPointRaised);
             transform.eulerAngles += initialRotation;
 
-            rodModel.transform.LookAt(hit.point);
+            //rodModel.transform.LookAt(hit.point);
         }
     }
 
