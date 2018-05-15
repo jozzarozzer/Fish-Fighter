@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class IntVariableHolder : MonoBehaviour
 {
-    public IntVariable fishingRodType;
+    public IntVariable variable;
 }

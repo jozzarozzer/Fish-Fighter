@@ -1,4 +1,4 @@
-﻿Shader "Custom/CelEffects"
+﻿Shader "TEST/CelEffects"
 {
 	Properties
 	{

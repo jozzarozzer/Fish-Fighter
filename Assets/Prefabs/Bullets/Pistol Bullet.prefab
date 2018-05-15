@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114542223756101558}
   - component: {fileID: 54907798652268240}
   - component: {fileID: 65766402129966270}
-  - component: {fileID: 82853606509723954}
+  - component: {fileID: 114657989114617320}
   m_Layer: 0
   m_Name: Pistol Bullet
   m_TagString: Untagged
@@ -174,86 +174,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 5, z: 0.75}
   m_Center: {x: 0, y: 0, z: 0.132999}
---- !u!82 &82853606509723954
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1317178027526888}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!96 &96694649772398100
 TrailRenderer:
   serializedVersion: 2
@@ -359,14 +279,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletData: {fileID: 0}
+  terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
+    type: 2}
   damage: 1
   playerAttack: 1
   enemyAttack: 0
-  attackCollidersOn: 1
   rigidBody: {fileID: 54907798652268240}
   lifetime: 2
   velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
+--- !u!114 &114657989114617320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1317178027526888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
+  AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
 --- !u!198 &198424719202351610
 ParticleSystem:
   m_ObjectHideFlags: 1

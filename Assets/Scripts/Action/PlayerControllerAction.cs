@@ -18,10 +18,8 @@ public class PlayerControllerAction : MonoBehaviour {
     Vector3 mousePosition; //position that the mouse ray collides with the ground.
 
     [Header("Stats")]
-    public int energy;
-    public IntVariable energyVariable;
-    public int maxEnergy;
-    public IntVariable maxEnergyVariable;
+    public IntVariable ammoVariable;
+    public IntVariable ammoMaxVariable;
 
     public int health;
     public IntVariable healthVariable;
@@ -47,7 +45,6 @@ public class PlayerControllerAction : MonoBehaviour {
 
     bool currentlyShooting;
     public float gunRecoil;
-    public int gunEnergyCost;
     int ammoCurrent;
     public float timeSinceShot;
     public float reloadingProgress;
@@ -64,7 +61,6 @@ public class PlayerControllerAction : MonoBehaviour {
     public float dashMaxDistance;
     public float dashMaxTime;
     float dashSpeed;
-    public int dashEnergyCost;
     bool currentlyDashing;
     public TrailRenderer trail;
     public Color trailColour;
@@ -82,6 +78,7 @@ public class PlayerControllerAction : MonoBehaviour {
 
     [Header("debug")]
     Vector3 hitPoint;
+    public GameObject DEBUGFISHSPAWN;
 
     void Start()
     {
@@ -92,7 +89,6 @@ public class PlayerControllerAction : MonoBehaviour {
         currentlyWalking = false;
 
         health = maxHealth;
-        energy = maxEnergy;
 
         rechargeTimePassed = 0;
 
@@ -111,6 +107,12 @@ public class PlayerControllerAction : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject fish = Instantiate(DEBUGFISHSPAWN);
+            fish.transform.position = transform.position + new Vector3 (0,0,10);
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Die();
@@ -126,12 +128,8 @@ public class PlayerControllerAction : MonoBehaviour {
 
         DetermineGun();
 
-        EnergyRecharge();
-
         healthVariable.value = health;
-        energyVariable.value = energy;
         maxHealthVariable.value = maxHealth;
-        maxEnergyVariable.value = maxEnergy;
 
 
         playerGameObjectVariable.value = gameObject;
@@ -148,7 +146,7 @@ public class PlayerControllerAction : MonoBehaviour {
         {
             if (CanDash())
             {
-                StartCoroutine(Dash(mousePosition, 1, 1));
+                StartCoroutine(Dash(mousePosition, 1));
             }
 
         }
@@ -172,8 +170,6 @@ public class PlayerControllerAction : MonoBehaviour {
         {
             currentlyShooting = false;
         }
-
-        Debug.Log(timeSinceShot);
     }
 
     void Die()
@@ -204,30 +200,13 @@ public class PlayerControllerAction : MonoBehaviour {
         }
     }
 
-    void EnergyRecharge()
-    {
-        if (energy < maxEnergy && rechargeTimePassed >= rechargeTick)
-        {
-            energy += rechargeAmount;
-            rechargeTimePassed = 0;
-        }
-
-        rechargeTimePassed += Time.deltaTime;
-    }
-
     private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.layer != 8)
-        {
-            print("E collision");
-        }
         if (collision.gameObject.GetComponent<EnemyController>())
         {
-            print("E collision enemy");
             var enemyScript = collision.gameObject.GetComponent<EnemyController>();
             if (!invincible)
             {
-                print("E damaged");
                 invincible = true;
                 TakeDamage(enemyScript.enemyData.damage);
             }
@@ -268,6 +247,8 @@ public class PlayerControllerAction : MonoBehaviour {
     {
         bulletObject = gun.bulletType.bulletObj;
         gunRecoil = gun.recoil;
+        ammoVariable.value = ammoCurrent;
+        ammoMaxVariable.value = gun.ammoMax;
     }
 
     void DetermineMousePosition() //determines the mouse position as a ray from screen to ground. 
@@ -280,9 +261,11 @@ public class PlayerControllerAction : MonoBehaviour {
         hitPoint = hit.point;
 
 
-        Vector3 vector1 = hit.point + transform.position;
+        //for detecting obstacles in the path of the aiming.
 
         /*
+        Vector3 vector1 = hit.point + transform.position;
+        
         RaycastHit hit2;
         if (Physics.Raycast(transform.position, vector1.normalized * dashMaxDistance, out hit2, obstacleMask))
         {
@@ -320,7 +303,7 @@ public class PlayerControllerAction : MonoBehaviour {
     
         gunHolder.transform.LookAt(mousePosition);
 
-        Vector3 velocityRaised = new Vector3(mousePosition.x, transform.position.y, mousePosition.z); //hit point raised to y of player
+        //Vector3 velocityRaised = new Vector3(mousePosition.x, transform.position.y, mousePosition.z); //hit point raised to y of player
         Vector3 velocityPosition = rigidBody.velocity + transform.position;
         transform.LookAt(velocityPosition);
         //transform.eulerAngles += initialRotation;
@@ -329,10 +312,9 @@ public class PlayerControllerAction : MonoBehaviour {
     bool CanDash() //Checks if the player is able to dash. 
     {
         checkNum = 0;
-        if (energy >= dashEnergyCost) checkNum++;
         if (!currentlyDashing) checkNum++;
 
-        if (checkNum == 2) return true;
+        if (checkNum == 1) return true;
         else return false;
 
     }
@@ -349,16 +331,10 @@ public class PlayerControllerAction : MonoBehaviour {
     bool CanAttack() //Checks if the player is able to use Attack1. 
     {
         checkNum = 0;
-        if (energy >= gunEnergyCost) checkNum++;
         if (!currentlyDashing) checkNum++;
 
-        if (checkNum == 2) return true;
+        if (checkNum == 1) return true;
         else return false;
-    }
-
-    void UseEnergy(int cost) //Uses inputed energy amount. 
-    {
-        energy -= cost;
     }
 
     void Recoil(float recoilAmount)
@@ -382,23 +358,19 @@ public class PlayerControllerAction : MonoBehaviour {
         }
     }
 
-    IEnumerator AttackTimeTracker()
-    {
-        float loopTime = 0.005f;
-        timeSinceShot += loopTime;
-        while (timeSinceShot != 0)
+    IEnumerator AttackTimeTracker() //may not even have to be put up sequentially as I don't believe the reload UI circle tracks this
+    {               
+        var initTime = Time.time;
+
+        int loopCount = 20;
+        float loopTime = gun.fireRate / loopCount;
+        for (int i = 0; i < loopCount; i++)
         {
+            timeSinceShot += loopTime;
+
             yield return new WaitForSeconds(loopTime);
-            if (timeSinceShot != 0)
-            {
-                timeSinceShot += loopTime;
-            }
-            if (timeSinceShot >= gun.fireRate)
-            {
-                timeSinceShot = 0;
-                break;
-            }
         }
+        timeSinceShot = 0;
         yield break;
     }
 
@@ -410,20 +382,13 @@ public class PlayerControllerAction : MonoBehaviour {
         }
         else if (timeSinceShot == 0 && reloadingProgress == 1)
         {
-            StartCoroutine(AttackTimeTracker());
-
-            ammoCurrent -= 1;
+            StartCoroutine(AttackTimeTracker());            
 
             Vector3 projectileDirection = mousePosition - transform.position;
 
             Recoil(gunRecoil);
-            UseEnergy(gunEnergyCost);
 
-
-            GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-            projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
-            projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
-            projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10;
+            StartCoroutine(BulletSpawn(projectileDirection));
 
             StartCoroutine(Screenshake());
 
@@ -432,6 +397,34 @@ public class PlayerControllerAction : MonoBehaviour {
                 StartCoroutine(Reload());
             }
         }
+    }
+
+    IEnumerator BulletSpawn(Vector3 projectileDirection)
+    {
+        if (gun.burstFire)
+        {
+            for (int i = 0; i < gun.burstFireAmount; i++)
+            {
+                GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+                projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
+                projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+                //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
+
+                ammoCurrent -= 1;
+
+                yield return new WaitForSeconds(gun.burstFireRate);
+            }
+        }
+        else
+        {
+            GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+            projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
+            projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+            //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
+
+            ammoCurrent -= 1;
+        }
+        yield break;
     }
 
     IEnumerator Reload()
@@ -458,13 +451,11 @@ public class PlayerControllerAction : MonoBehaviour {
         }
     }
 
-    IEnumerator Dash(Vector3 mousePos, int energyMult, float dashSpeedMult) //Makes the player dash. 
+    IEnumerator Dash(Vector3 mousePos, float dashSpeedMult) //Makes the player dash. 
     {
         currentlyDashing = true;
         trail.startColor = trailColour;
         trail.endColor = trailColour;
-
-        UseEnergy(dashEnergyCost * energyMult);
 
         Vector3 adjustedHitPoint = mousePos - transform.position; //moves the hit.point vector based on player position
         Vector3 aimVector = adjustedHitPoint.normalized * dashMaxDistance; //normalizes the adjusted hit.point and multiplies by the dashMaxDistance modifier

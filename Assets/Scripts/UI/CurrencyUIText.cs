@@ -13,12 +13,12 @@ public class CurrencyUIText : MonoBehaviour
     {
         if (playerCurrency.value < shownAmount)
         {
-            shownAmount -= 10;
+            shownAmount -= 40;
         }
         if (playerCurrency.value > shownAmount)
         {
             shownAmount = playerCurrency.value;
         }
-                GetComponent<Text>().text = shownAmount.ToString() + "G";
+        GetComponent<Text>().text = shownAmount.ToString() + "G";
 	}
 }

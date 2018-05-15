@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Name: Gun2
   m_EditorClassIdentifier: 
   gunType: Assault Rifle
-  fireRate: 0.05
+  fireRate: 0.3
+  burstFireRate: 0.1
+  burstFireAmount: 3
   recoil: 10
   price: 750
   level: 2
   ammoMax: 22
   reloadTime: 2
-  canHold: 1
+  canHold: 0
+  burstFire: 1
   bulletType: {fileID: 11400000, guid: db017f9a1bd0bdc4aba073678a4b2e21, type: 2}

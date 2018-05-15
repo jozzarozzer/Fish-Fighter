@@ -13,5 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: pistol
   damage: 1
+  piercesEnemies: 1
+  enemyPierceAmount: 1
   bulletObj: {fileID: 1317178027526888, guid: 332ae3cf35526124a8085f21e572a4d4, type: 2}
   bulletMesh: {fileID: 0}

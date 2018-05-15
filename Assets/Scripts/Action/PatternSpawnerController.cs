@@ -5,28 +5,20 @@ using UnityEngine;
 public class PatternSpawnerController : MonoBehaviour
 {
     public IntVariable enemyCount;
+    GameObject patternInstance;
 
 
     public void SpawnPattern(GameObject chosenPattern)
     {
-        StartCoroutine(SpawnPatternIE(chosenPattern));
+        SpawnPatternIE(chosenPattern);
     }
-    public IEnumerator SpawnPatternIE(GameObject pattern)
+    public void SpawnPatternIE(GameObject pattern)
     {
-        GameObject patternInstance = Instantiate(pattern, transform);
+        patternInstance = Instantiate(pattern, transform);
+    }
 
-        yield return new WaitForSeconds(1);
-
-        for (int i = 0; i < 50000; i++)
-        {
-            if (enemyCount.value == 0)
-            {
-                yield return new WaitForSeconds(1.9f);
-                Destroy(patternInstance);
-                break;
-            }
-            yield return new WaitForSeconds(0.05f);
-        }
-
+    public void DestroyPattern()
+    {
+        Destroy(patternInstance);
     }
 }

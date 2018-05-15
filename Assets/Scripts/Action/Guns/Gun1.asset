@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Name: Gun1
   m_EditorClassIdentifier: 
   gunType: Pistol
-  fireRate: 0.02
+  fireRate: 0.1
+  burstFireRate: 0.02
+  burstFireAmount: 3
   recoil: 15
   price: 0
   level: 1
   ammoMax: 9
   reloadTime: 1
   canHold: 0
+  burstFire: 1
   bulletType: {fileID: 11400000, guid: 4c7dbcfbae00a6f4bad91742bb4295ba, type: 2}

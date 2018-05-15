@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gun4
   m_EditorClassIdentifier: 
   gunType: Cannon
-  fireRate: 0.75
+  fireRate: 0.3
   recoil: 40
   price: 3000
   level: 4

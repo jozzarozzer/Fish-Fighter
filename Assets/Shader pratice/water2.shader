@@ -1,4 +1,4 @@
-﻿Shader "Unlit/water2"
+﻿Shader "TEST/water2"
 {
 	Properties
 	{

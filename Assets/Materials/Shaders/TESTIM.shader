@@ -1,4 +1,4 @@
-﻿Shader "Hidden/TESTIMAGE"
+﻿Shader "TEST/TESTIMAGE"
 {
 	Properties
 	{

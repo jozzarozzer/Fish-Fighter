@@ -1,4 +1,4 @@
-﻿Shader "Unlit/TESTUN"
+﻿Shader "TEST/TESTUN"
 {
 	Properties
 	{

@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/Lighting/Toon"
+Shader "TEST/Lighting/Toon"
 {
     Properties
     {

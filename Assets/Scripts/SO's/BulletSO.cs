@@ -8,6 +8,9 @@ public class BulletSO : ScriptableObject
     public string bulletType;
     public float damage;
 
+    public bool piercesEnemies;
+    public int enemyPierceAmount;
+
     public GameObject bulletObj;
     public Mesh bulletMesh;
 

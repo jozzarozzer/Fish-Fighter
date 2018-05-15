@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gun3
   m_EditorClassIdentifier: 
   gunType: Slugger
-  fireRate: 0.3
+  fireRate: 0.1
   recoil: 20
   price: 1500
   level: 3

@@ -1,4 +1,4 @@
-﻿Shader "Custom/Normal Extrusion" {
+﻿Shader "TEST/Normal Extrusion" {
 	Properties {
 		_MainTex ("Texture", 2D) = "white" {}
 		_Amount ("Extrude Amount", Range(-0.0001,0.0001)) = 0

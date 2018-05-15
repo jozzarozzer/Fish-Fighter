@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 54780274163114166}
   - component: {fileID: 208068012833467426}
   - component: {fileID: 114141790624480988}
+  - component: {fileID: 114827735409934556}
   m_Layer: 0
   m_Name: Tiny Fish 1
   m_TagString: Untagged
@@ -146,6 +147,26 @@ MonoBehaviour:
   agent: {fileID: 0}
   target: {fileID: 11400000, guid: ce649bf24f8be8743ae65a8f002d6b6d, type: 2}
   hitEffect: {fileID: 1075794841393638, guid: fcf4fba91bc0df94293eacb69f209c02, type: 2}
+--- !u!114 &114827735409934556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135853057855948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae16aa5771aea944c9cd6db7074fd74f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: 0
+  player: 0
+  cam: 0
+  nonSolid: 0
+  enemy: 1
+  boss: 0
+  bullet: 0
+  piercedByBullets: 0
+  waterZone: 0
 --- !u!195 &195709642099211712
 NavMeshAgent:
   m_ObjectHideFlags: 1
