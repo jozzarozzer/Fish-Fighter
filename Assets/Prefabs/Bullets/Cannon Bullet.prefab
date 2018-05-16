@@ -279,7 +279,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletData: {fileID: 0}
-  terrainHitFX: {fileID: 0}
+  terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
+    type: 2}
   damage: 1
   playerAttack: 1
   enemyAttack: 0

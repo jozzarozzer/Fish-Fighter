@@ -107,7 +107,7 @@ public class PlayerControllerAction : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)) //debug fish spawner
         {
             GameObject fish = Instantiate(DEBUGFISHSPAWN);
             fish.transform.position = transform.position + new Vector3 (0,0,10);
@@ -123,8 +123,8 @@ public class PlayerControllerAction : MonoBehaviour {
             Die();
         }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y * 0, transform.position.z);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        //transform.position = new Vector3(transform.position.x, transform.position.y * 0, transform.position.z);
+        //transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
         DetermineGun();
 
@@ -288,7 +288,17 @@ public class PlayerControllerAction : MonoBehaviour {
             else
             {
                 currentlyWalking = false;
-                rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, 0.2f);
+
+                if (rigidBody.velocity.magnitude >= 1)
+                {
+                    float x = Mathf.Lerp(rigidBody.velocity.x, 0, 0.2f);
+                    float z = Mathf.Lerp(rigidBody.velocity.z, 0, 0.2f);
+                    rigidBody.velocity = new Vector3(x, rigidBody.velocity.y, z);
+                }
+                else
+                {
+                    rigidBody.velocity = Vector3.zero;
+                }
             }
         }
         else
@@ -305,7 +315,7 @@ public class PlayerControllerAction : MonoBehaviour {
 
         //Vector3 velocityRaised = new Vector3(mousePosition.x, transform.position.y, mousePosition.z); //hit point raised to y of player
         Vector3 velocityPosition = rigidBody.velocity + transform.position;
-        transform.LookAt(velocityPosition);
+        transform.LookAt(new Vector3(velocityPosition.x, transform.position.y, velocityPosition.z));
         //transform.eulerAngles += initialRotation;
     }
 
@@ -359,7 +369,8 @@ public class PlayerControllerAction : MonoBehaviour {
     }
 
     IEnumerator AttackTimeTracker() //may not even have to be put up sequentially as I don't believe the reload UI circle tracks this
-    {               
+    {
+        /*
         var initTime = Time.time;
 
         int loopCount = 20;
@@ -370,6 +381,11 @@ public class PlayerControllerAction : MonoBehaviour {
 
             yield return new WaitForSeconds(loopTime);
         }
+        timeSinceShot = 0;
+
+        */
+        timeSinceShot = 1;
+        yield return new WaitForSeconds(gun.fireRate);
         timeSinceShot = 0;
         yield break;
     }
@@ -384,18 +400,12 @@ public class PlayerControllerAction : MonoBehaviour {
         {
             StartCoroutine(AttackTimeTracker());            
 
-            Vector3 projectileDirection = mousePosition - transform.position;
-
-            Recoil(gunRecoil);
+            Vector3 projectileDirection = mousePosition - transform.position;           
 
             StartCoroutine(BulletSpawn(projectileDirection));
 
             StartCoroutine(Screenshake());
 
-            if (ammoCurrent <= 0 && reloadingProgress == 1)
-            {
-                StartCoroutine(Reload());
-            }
         }
     }
 
@@ -405,26 +415,52 @@ public class PlayerControllerAction : MonoBehaviour {
         {
             for (int i = 0; i < gun.burstFireAmount; i++)
             {
-                GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
-                projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
-                projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
-                //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
+                BulletInstantiate(projectileDirection);
 
-                ammoCurrent -= 1;
+                Recoil(gunRecoil);
 
                 yield return new WaitForSeconds(gun.burstFireRate);
             }
         }
         else
         {
-            GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+            BulletInstantiate(projectileDirection);
+
+            Recoil(gunRecoil);
+        }
+
+        if (ammoCurrent <= 0 && reloadingProgress == 1)
+        {
+            StartCoroutine(Reload());
+        }
+
+        yield break;
+    }
+
+    public void BulletInstantiate(Vector3 projectileDirection)
+    {
+        GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
+
+        if (projectile.GetComponent<Tags>() && projectile.GetComponent<Tags>().multiBullet)
+        {
+            for (int i = 0; i < projectile.transform.childCount; i++)
+            {
+                projectile.transform.GetChild(i).GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
+                projectile.transform.GetChild(i).GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+            }
+
+            //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
+
+            ammoCurrent -= 1;
+        }
+        else
+        {
             projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
             projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
             //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
 
             ammoCurrent -= 1;
         }
-        yield break;
     }
 
     IEnumerator Reload()

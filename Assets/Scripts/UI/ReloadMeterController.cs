@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ReloadMeterController : MonoBehaviour {
 
+    public bool follow;
+
     public GameObject meterObject;
     public Image meterImage;
 
@@ -43,7 +45,10 @@ public class ReloadMeterController : MonoBehaviour {
 
         Vector3 playerScreenPos = cam.WorldToViewportPoint(player.transform.position);
         Vector3 playerUIPos = new Vector3(playerScreenPos.x * Screen.width, playerScreenPos.y * Screen.height, playerScreenPos.z);
-        rect.position = playerUIPos + offset;
+        if (follow)
+        {
+            rect.position = playerUIPos + offset;
+        }
         
 	}
 }

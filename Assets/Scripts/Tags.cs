@@ -14,7 +14,9 @@ public class Tags : MonoBehaviour
     public bool enemy;
     public bool boss;
     public bool bullet;
+    public bool multiBullet;
     public bool piercedByBullets;
+
 
     [Header("Fishing Area")]
     public bool waterZone;

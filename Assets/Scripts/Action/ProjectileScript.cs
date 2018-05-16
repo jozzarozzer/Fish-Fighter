@@ -23,7 +23,11 @@ public class ProjectileScript : MonoBehaviour
 
     Vector3 collidePosition;
     Vector3 positionLastFrame;
+    Vector3[] previousPositions = new Vector3[10];
+    Vector3 startPosition;
+    Vector3 castPosition;
 
+    public LayerMask terrainMask;
 
     int enemiesPierced;
 
@@ -36,6 +40,9 @@ public class ProjectileScript : MonoBehaviour
         GetComponent<AudioSend>().SendAudio();
 
         enemiesPierced = 0;
+
+        startPosition = transform.position;
+        castPosition = startPosition;
     }
 
     void Update()
@@ -45,7 +52,18 @@ public class ProjectileScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        positionLastFrame = transform.position;
+        for (int i = 0; i < previousPositions.Length; i++)
+        {
+            if (i == 0)
+            {
+                previousPositions[i] = Vector3.zero;
+            }
+            else
+            {
+                previousPositions[i - 1] = previousPositions[i];
+            }
+        }
+        previousPositions[previousPositions.Length - 1] = transform.position;
     }
 
     public void SetVelocity(Vector3 direction)
@@ -72,7 +90,7 @@ public class ProjectileScript : MonoBehaviour
         {
             if (collider.gameObject.GetComponent<Tags>().terrain)
             {
-                HitTerrain();
+                HitTerrain(collider);
             }
             else if (collider.gameObject.GetComponent<Tags>().enemy)
             {
@@ -81,8 +99,10 @@ public class ProjectileScript : MonoBehaviour
         }
         else
         {
-            Die();
+            //Die();
         }
+
+        
     }
 
     void HitEffect(GameObject hitEffectIN)
@@ -95,10 +115,36 @@ public class ProjectileScript : MonoBehaviour
         //inversed, just do it in the prefab.
     }
 
-    void HitTerrain()
+    void HitTerrain(Collider terrainCollider)
     {
         HitEffect(terrainHitFX);
-        Die();
+
+        Vector3 normal;
+
+        Vector3 approxNormal = transform.position - terrainCollider.ClosestPointOnBounds(transform.position);
+        RaycastHit hit;
+
+        castPosition = previousPositions[2];
+
+        var dir = transform.position - castPosition;
+        
+        if (Physics.Raycast(castPosition, dir, out hit, 1000, terrainMask)) //lower range after debugging is done
+        {
+            if (hit.collider.gameObject.GetComponent<Tags>() != null && hit.collider.gameObject.GetComponent<Tags>().terrain)
+            {
+                normal = hit.normal;
+
+                transform.position = new Vector3 (hit.point.x, transform.position.y, hit.point.z);
+
+                Vector3 reflectVelocity = Vector3.Reflect(velocity, normal);
+
+                velocity = new Vector3 (reflectVelocity.x, velocity.y, reflectVelocity.z);
+            }
+        }
+
+        
+
+        //Die();
     }
     
     void HitEnemy(GameObject enemy)
@@ -115,5 +161,10 @@ public class ProjectileScript : MonoBehaviour
         {
             Die();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(startPosition, transform.position);
     }
 }
