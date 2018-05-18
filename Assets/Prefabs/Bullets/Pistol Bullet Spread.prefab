@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4926727725947470}
   - component: {fileID: 114979414056271566}
+  - component: {fileID: 114739546137263280}
   m_Layer: 0
   m_Name: Pistol Bullet Spread
   m_TagString: Untagged
@@ -56,7 +57,6 @@ GameObject:
   - component: {fileID: 114681780204578110}
   - component: {fileID: 54461424497468998}
   - component: {fileID: 65702456194648144}
-  - component: {fileID: 114835114601299214}
   m_Layer: 0
   m_Name: Pistol Bullet Spread
   m_TagString: Untagged
@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 114452279975853206}
   - component: {fileID: 54189553019118848}
   - component: {fileID: 65657573885405496}
-  - component: {fileID: 114005202673006358}
   m_Layer: 0
   m_Name: Pistol Bullet Spread (2)
   m_TagString: Untagged
@@ -147,7 +146,6 @@ GameObject:
   - component: {fileID: 114497883694540784}
   - component: {fileID: 54780639458032792}
   - component: {fileID: 65362972240701856}
-  - component: {fileID: 114729027819796342}
   m_Layer: 0
   m_Name: Pistol Bullet Spread (1)
   m_TagString: Untagged
@@ -319,7 +317,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016224483418346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.282614, y: 0.98, z: -146.91295}
+  m_LocalPosition: {x: -1.1500566, y: 0.16, z: -156.32954}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4488704748214740}
@@ -547,7 +545,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -640,7 +638,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -733,7 +731,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -811,19 +809,6 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114005202673006358
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1354885239081042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
-  AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
 --- !u!114 &114452279975853206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -838,16 +823,16 @@ MonoBehaviour:
   bulletData: {fileID: 0}
   terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
     type: 2}
-  damage: 1
   playerAttack: 1
   enemyAttack: 0
+  bounce: 0
   rigidBody: {fileID: 54189553019118848}
   lifetime: 4
-  velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
   terrainMask:
     serializedVersion: 2
     m_Bits: 512
+  bulletBehaviour: {fileID: 0}
 --- !u!114 &114497883694540784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -862,16 +847,16 @@ MonoBehaviour:
   bulletData: {fileID: 0}
   terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
     type: 2}
-  damage: 1
   playerAttack: 1
   enemyAttack: 0
+  bounce: 0
   rigidBody: {fileID: 54780639458032792}
   lifetime: 4
-  velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
   terrainMask:
     serializedVersion: 2
     m_Bits: 512
+  bulletBehaviour: {fileID: 0}
 --- !u!114 &114681780204578110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -886,41 +871,28 @@ MonoBehaviour:
   bulletData: {fileID: 0}
   terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
     type: 2}
-  damage: 1
   playerAttack: 1
   enemyAttack: 0
+  bounce: 0
   rigidBody: {fileID: 54461424497468998}
   lifetime: 4
-  velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
   terrainMask:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &114729027819796342
+  bulletBehaviour: {fileID: 0}
+--- !u!114 &114739546137263280
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1788951943764400}
+  m_GameObject: {fileID: 1016224483418346}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
-  AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
---- !u!114 &114835114601299214
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1130759523460754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
+  clip: {fileID: 8300000, guid: 843670ee44bf1ce4cb581647616816e4, type: 3}
   AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
 --- !u!114 &114979414056271566
 MonoBehaviour:
@@ -1003,7 +975,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1241869228
+  randomSeed: 985460233
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4364,7 +4336,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1241869228
+  randomSeed: 1526028761
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7725,7 +7697,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1241869228
+  randomSeed: 2054347904
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11041,7 +11013,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -11095,7 +11067,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -11149,7 +11121,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8de083078b342b5468420e8465980398, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

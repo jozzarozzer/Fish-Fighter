@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4306991756919882}
   - component: {fileID: 198790260158346824}
   - component: {fileID: 199218762928229152}
+  - component: {fileID: 114324682075061486}
   m_Layer: 0
   m_Name: Terrain Bullet Hit
   m_TagString: Untagged
@@ -41,6 +42,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114324682075061486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085007184861892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c99a4982333f34c8ced265897d0547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killTime: 1
 --- !u!198 &198790260158346824
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -101,7 +114,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 517422215
+  randomSeed: 906689068
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -13,5 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: Cannon Bullet
   damage: 5
+  velocity: 50
+  piercesEnemies: 0
+  enemyPierceAmount: 0
   bulletObj: {fileID: 1512408934555014, guid: 87fc23e6063964f43b3d0ac9d9540577, type: 2}
   bulletMesh: {fileID: 0}

@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 8a1f42b9a8576f44e8f2a78562f81f31, type: 3}
+  clip: {fileID: 8300000, guid: 4bccfd8cde965de46ab118de1bb8fa83, type: 3}
   AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
 --- !u!114 &114979960486697038
 MonoBehaviour:
@@ -294,13 +294,16 @@ MonoBehaviour:
   bulletData: {fileID: 0}
   terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
     type: 2}
-  damage: 1
   playerAttack: 1
   enemyAttack: 0
+  bounce: 0
   rigidBody: {fileID: 54352489304730642}
   lifetime: 2
-  velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 512
+  bulletBehaviour: {fileID: 0}
 --- !u!198 &198914776152662832
 ParticleSystem:
   m_ObjectHideFlags: 1

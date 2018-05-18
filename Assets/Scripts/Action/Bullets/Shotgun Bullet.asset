@@ -13,5 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: Shotgun Bullet
   damage: 3
+  velocity: 50
+  piercesEnemies: 0
+  enemyPierceAmount: 0
   bulletObj: {fileID: 1660545455535922, guid: 084120cbe74eaa14e9e6ff79a0486c6f, type: 2}
   bulletMesh: {fileID: 0}

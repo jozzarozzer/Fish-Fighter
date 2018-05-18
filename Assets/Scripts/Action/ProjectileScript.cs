@@ -10,13 +10,12 @@ public class ProjectileScript : MonoBehaviour
     public GameObject terrainHitFX;
 
     //public Attack attack;
-    public float damage;
     public bool playerAttack;
     public bool enemyAttack;
+    public bool bounce;
 
     public Rigidbody rigidBody;
     public float lifetime;
-    public float velocityMult;
     Vector3 velocity = Vector3.zero;
 
     public Vector3 rotation;
@@ -29,7 +28,12 @@ public class ProjectileScript : MonoBehaviour
 
     public LayerMask terrainMask;
 
+    
+
     int enemiesPierced;
+
+    bool customBehaviour;
+    public BulletBehaviourSO bulletBehaviour;
 
     void Start()
     {
@@ -43,10 +47,22 @@ public class ProjectileScript : MonoBehaviour
 
         startPosition = transform.position;
         castPosition = startPosition;
+
+
+
+        if (bulletBehaviour != null) { customBehaviour = true; }
+        else { customBehaviour = false; }
     }
 
     void Update()
     {
+        if (customBehaviour)
+        {
+            velocity = bulletBehaviour.VelocityUpdate(velocity);
+        }
+
+        velocity += new Vector3(Mathf.Sin(Time.time) * 10, 0, Mathf.Sin(Time.time) * 10);
+
         rigidBody.velocity = velocity;
     }
 
@@ -68,7 +84,7 @@ public class ProjectileScript : MonoBehaviour
 
     public void SetVelocity(Vector3 direction)
     {
-        velocity = direction.normalized * velocityMult;
+        velocity = direction.normalized * bulletData.velocity;
     }
 
     public IEnumerator deathTimer(float time)
@@ -119,6 +135,23 @@ public class ProjectileScript : MonoBehaviour
     {
         HitEffect(terrainHitFX);
 
+        if (bounce)
+        {
+            Bounce(terrainCollider);
+        }
+        else
+        {
+            Die();
+        }
+        
+
+        
+
+        //Die();
+    }
+
+    void Bounce(Collider terrainCollider)
+    {
         Vector3 normal;
 
         Vector3 approxNormal = transform.position - terrainCollider.ClosestPointOnBounds(transform.position);
@@ -127,24 +160,20 @@ public class ProjectileScript : MonoBehaviour
         castPosition = previousPositions[2];
 
         var dir = transform.position - castPosition;
-        
+
         if (Physics.Raycast(castPosition, dir, out hit, 1000, terrainMask)) //lower range after debugging is done
         {
             if (hit.collider.gameObject.GetComponent<Tags>() != null && hit.collider.gameObject.GetComponent<Tags>().terrain)
             {
                 normal = hit.normal;
 
-                transform.position = new Vector3 (hit.point.x, transform.position.y, hit.point.z);
+                transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
 
                 Vector3 reflectVelocity = Vector3.Reflect(velocity, normal);
 
-                velocity = new Vector3 (reflectVelocity.x, velocity.y, reflectVelocity.z);
+                velocity = new Vector3(reflectVelocity.x, velocity.y, reflectVelocity.z);
             }
         }
-
-        
-
-        //Die();
     }
     
     void HitEnemy(GameObject enemy)

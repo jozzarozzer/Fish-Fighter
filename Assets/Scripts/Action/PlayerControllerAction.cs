@@ -445,8 +445,9 @@ public class PlayerControllerAction : MonoBehaviour {
         {
             for (int i = 0; i < projectile.transform.childCount; i++)
             {
-                projectile.transform.GetChild(i).GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
                 projectile.transform.GetChild(i).GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+                projectile.transform.GetChild(i).GetComponent<ProjectileScript>().SetVelocity(projectileDirection);        
+                projectile.GetComponent<AudioSend>().SendAudio();
             }
 
             //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
@@ -455,8 +456,8 @@ public class PlayerControllerAction : MonoBehaviour {
         }
         else
         {
-            projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);
             projectile.GetComponent<ProjectileScript>().bulletData = gun.bulletType;
+            projectile.GetComponent<ProjectileScript>().SetVelocity(projectileDirection);           
             //projectile.GetComponent<AudioSource>().pitch += (Random.value - 0.5f) / 10; //needs to be updated to the new audio system
 
             ammoCurrent -= 1;

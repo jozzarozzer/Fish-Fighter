@@ -189,7 +189,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb683b816caac174a9a43b5c2d44c5a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,22 +212,28 @@ TrailRenderer:
   m_Time: 0.25
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.3
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
-        time: 0
+        time: 0.023132324
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 1
+      - serializedVersion: 2
+        time: 0.9
+        value: 1
+        inSlope: 0
+        outSlope: -2.556145
+        tangentMode: 1
       - serializedVersion: 2
         time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        value: 0.037036896
+        inSlope: -25.949986
+        outSlope: -3.4566286
+        tangentMode: 1
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
@@ -281,13 +287,16 @@ MonoBehaviour:
   bulletData: {fileID: 0}
   terrainHitFX: {fileID: 1085007184861892, guid: 1a00352e1fcbad0419e326bcacc157a2,
     type: 2}
-  damage: 1
   playerAttack: 1
   enemyAttack: 0
+  bounce: 0
   rigidBody: {fileID: 54907798652268240}
   lifetime: 2
-  velocityMult: 50
   rotation: {x: 0, y: 0, z: 0}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 512
+  bulletBehaviour: {fileID: 0}
 --- !u!114 &114657989114617320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed2db0799a3f764aac1801124419d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 9adcc96112d1d024a9f4d2f23a84fd89, type: 3}
+  clip: {fileID: 8300000, guid: 843670ee44bf1ce4cb581647616816e4, type: 3}
   AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
 --- !u!198 &198424719202351610
 ParticleSystem:
@@ -3677,7 +3686,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb683b816caac174a9a43b5c2d44c5a7, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

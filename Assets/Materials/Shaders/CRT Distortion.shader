@@ -3,7 +3,10 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_ScanTex ("Scanline Texture", 2D) = "white" {}
+		_DisplacementTex ("Displacement Texture", 2D) = "white" {}
+		_Strength ("Distortion Strength", float) = 1
+		_NoiseScale ("Displacement Scale", float) = 1
+		_XAnimate ("X Animate", float) = 1
 	}
 	SubShader
 	{
@@ -41,21 +44,27 @@
 			}
 			
 			sampler2D _MainTex;
-			sampler2D _ScanTex;
+			sampler2D _DisplacementTex;
+			float _Strength;
+			float _NoiseScale;
+			float _XAnimate;
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-			fixed4 col;
-			float offsetHeight = frac(_Time[1] / 2) * 2;
-			//if (offsetHeight >= 1) offsetHeight = 0 + (offsetHeight - 1);
+				fixed4 col;
 
-			if (i.uv.y > offsetHeight && i.uv.y < offsetHeight + 0.05) 
-				col = tex2D(_MainTex, i.uv + float2(-0.2, 0)) + 0.2;
-			else 
+				half2 n = tex2D(_DisplacementTex, float2 ((i.uv.x + _XAnimate * _Time[1])/ _NoiseScale, i.uv.y / _NoiseScale));
+				half2 d = n * 2 -1;
+
+				i.uv += d * _Strength;
+				
+				if (i.uv.x > 1 || i.uv.x < 0 || i.uv.y > 1 || i.uv.y < 0)
+					return (0,0,0,0);
+				else				
+
+				i.uv = saturate(i.uv);
+				
 				col = tex2D(_MainTex, i.uv);
-
-			col *= tex2D(_ScanTex, float2(i.worldPosition.x, i.worldPosition.y) );
-			col += 0.05; //scanlines make it look darker, so this is to brighten it up
 				return col;
 			}
 			ENDCG
