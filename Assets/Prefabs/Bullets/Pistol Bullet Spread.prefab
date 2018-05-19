@@ -194,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1354885239081042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4474516586284076}
@@ -222,7 +222,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1788951943764400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4201689212083626}
@@ -832,7 +832,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 512
-  bulletBehaviour: {fileID: 0}
+  bulletBehaviour: {fileID: 11400000, guid: 5045ffac25e41fa488b14ed0adee288f, type: 2}
 --- !u!114 &114497883694540784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -856,7 +856,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 512
-  bulletBehaviour: {fileID: 0}
+  bulletBehaviour: {fileID: 11400000, guid: 35a784854d2223243b79567b4ef5ffdf, type: 2}
 --- !u!114 &114681780204578110
 MonoBehaviour:
   m_ObjectHideFlags: 1

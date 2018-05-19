@@ -35,19 +35,11 @@
 		Pass
 		{
 
-			Tags
-			{
-				"LightMode" = "ForwardBase"
-			}
-
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma multi_compile_fwdbase
 			
 			#include "UnityCG.cginc"
-			#include "AutoLight.cginc"
-			#include "Lighting.cginc"
 
 
 
@@ -66,13 +58,6 @@
 				half3 worldNormal : TEXCOORD2;
 				float3 screenPos : TEXCOORD3;
 			};
-
-			float LightToonShading(float3 normal, float3 lightDir)
-            {
-                float NdotL = max(0.0, dot(normalize(normal), normalize(lightDir)));
-                //return floor(NdotL * _Threshold) / (_Threshold - 0.5);
-				return NdotL;
-            }
 
 			v2f vert (appdata v)
 			{

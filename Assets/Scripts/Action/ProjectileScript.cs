@@ -28,6 +28,8 @@ public class ProjectileScript : MonoBehaviour
 
     public LayerMask terrainMask;
 
+    float startTime;
+
     
 
     int enemiesPierced;
@@ -41,7 +43,10 @@ public class ProjectileScript : MonoBehaviour
         StartCoroutine(deathTimer(lifetime));
         transform.eulerAngles += rotation;
 
-        GetComponent<AudioSend>().SendAudio();
+        if (GetComponent<AudioSend>())
+        {
+            GetComponent<AudioSend>().SendAudio();
+        }
 
         enemiesPierced = 0;
 
@@ -52,6 +57,8 @@ public class ProjectileScript : MonoBehaviour
 
         if (bulletBehaviour != null) { customBehaviour = true; }
         else { customBehaviour = false; }
+
+        startTime = Time.time;
     }
 
     void Update()
@@ -59,9 +66,8 @@ public class ProjectileScript : MonoBehaviour
         if (customBehaviour)
         {
             velocity = bulletBehaviour.VelocityUpdate(velocity);
-        }
-
-        velocity += new Vector3(Mathf.Sin(Time.time) * 10, 0, Mathf.Sin(Time.time) * 10);
+            rigidBody.position = bulletBehaviour.PositionUpdate(rigidBody.position, startTime);
+        }       
 
         rigidBody.velocity = velocity;
     }

@@ -20,6 +20,6 @@ MonoBehaviour:
   level: 1
   ammoMax: 200
   reloadTime: 1
-  canHold: 1
+  canHold: 0
   burstFire: 0
   bulletType: {fileID: 11400000, guid: d44ae5bb109310d4e9e0ab9126309dd0, type: 2}
