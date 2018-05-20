@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4926727725947470}
-  - component: {fileID: 114979414056271566}
   - component: {fileID: 114739546137263280}
   m_Layer: 0
   m_Name: Pistol Bullet Spread
@@ -110,7 +109,7 @@ GameObject:
   - component: {fileID: 54189553019118848}
   - component: {fileID: 65657573885405496}
   m_Layer: 0
-  m_Name: Pistol Bullet Spread (2)
+  m_Name: Pistol Bullet Spread Wave Inv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +146,7 @@ GameObject:
   - component: {fileID: 54780639458032792}
   - component: {fileID: 65362972240701856}
   m_Layer: 0
-  m_Name: Pistol Bullet Spread (1)
+  m_Name: Pistol Bullet Spread Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,7 +275,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1130759523460754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4092431092387598}
@@ -894,27 +893,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 843670ee44bf1ce4cb581647616816e4, type: 3}
   AudioSpawner: {fileID: 11400000, guid: 1ab5d959a08739845bcbb7be56853b68, type: 2}
---- !u!114 &114979414056271566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016224483418346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae16aa5771aea944c9cd6db7074fd74f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrain: 0
-  player: 0
-  cam: 0
-  nonSolid: 0
-  enemy: 0
-  boss: 0
-  bullet: 0
-  multiBullet: 1
-  piercedByBullets: 0
-  waterZone: 0
 --- !u!198 &198606256195281228
 ParticleSystem:
   m_ObjectHideFlags: 1

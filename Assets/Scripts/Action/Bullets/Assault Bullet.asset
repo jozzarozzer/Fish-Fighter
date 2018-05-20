@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 281ec764e8289474eb4058a20594d50b, type: 3}
-  m_Name: Multi Pistol Bullet
+  m_Name: Assault Bullet
   m_EditorClassIdentifier: 
-  bulletType: pistol
-  damage: 1
-  velocity: 50
-  multiBullet: 1
+  bulletType: 
+  damage: 30
+  velocity: 60
+  multiBullet: 0
   piercesEnemies: 1
-  enemyPierceAmount: 1
-  bulletObj: {fileID: 1016224483418346, guid: 375274ddfe1f25f44ba786a21000e953, type: 2}
+  enemyPierceAmount: 2
+  bulletObj: {fileID: 1808723972528014, guid: ec5a35105b813ed449887fb7d5f1c0ab, type: 2}
   bulletMesh: {fileID: 0}

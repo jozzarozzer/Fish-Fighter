@@ -3119,7 +3119,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &145308788
@@ -4621,7 +4620,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!23 &172936098
@@ -4838,7 +4836,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &180953853 stripped
@@ -4863,7 +4860,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!64 &180953858
@@ -5992,7 +5988,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &256847204
@@ -7095,7 +7090,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!23 &312011953
@@ -7526,7 +7520,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &327033696
@@ -8078,7 +8071,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &350901521
@@ -11410,7 +11402,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &544944637
@@ -14628,7 +14619,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!23 &753520345
@@ -17156,7 +17146,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!114 &889814888
@@ -18830,7 +18819,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!64 &980853403
@@ -19835,7 +19823,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!23 &1009493877
@@ -21127,7 +21114,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &1061545982
@@ -25688,7 +25674,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &1283767370
@@ -31986,7 +31971,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &1618767720
@@ -32235,7 +32219,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!1 &1626605078
@@ -32669,7 +32652,6 @@ MonoBehaviour:
   enemy: 0
   boss: 0
   bullet: 0
-  multiBullet: 0
   piercedByBullets: 0
   waterZone: 0
 --- !u!54 &1658637919
@@ -32717,7 +32699,7 @@ MonoBehaviour:
   maxHealthVariable: {fileID: 11400000, guid: dddeea6fcd37e044ba2040ec9ad61a9c, type: 2}
   rechargeTick: 0.1
   rechargeAmount: 2
-  gun: {fileID: 11400000, guid: a184ded8dde4f214dbb7747d84cf3977, type: 2}
+  gun: {fileID: 11400000, guid: 4c6c930264b934c4c82c155032d33105, type: 2}
   playerGuns: {fileID: 11400000, guid: 4922ba67a4502044b8d365813a04f891, type: 2}
   gunHolder: {fileID: 758418449}
   bulletObject: {fileID: 0}
@@ -35083,7 +35065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a1b0ca0eaf56b4ea076caae7aac953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunType: {fileID: 11400000, guid: a184ded8dde4f214dbb7747d84cf3977, type: 2}
+  gunType: {fileID: 0}
 --- !u!114 &1803505957
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class GunSO : ScriptableObject
     public int price;
     public int level;
     public int ammoMax;
-    public int reloadTime;
+    public float reloadTime;
 
     public bool canHold;
     public bool burstFire;

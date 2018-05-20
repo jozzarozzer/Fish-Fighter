@@ -14,6 +14,7 @@ MonoBehaviour:
   bulletType: Rifle Bullet
   damage: 2
   velocity: 50
+  multiBullet: 0
   piercesEnemies: 0
   enemyPierceAmount: 0
   bulletObj: {fileID: 1808723972528014, guid: ec5a35105b813ed449887fb7d5f1c0ab, type: 2}

@@ -9,6 +9,7 @@ public class BulletSO : ScriptableObject
     public float damage;
     public float velocity;
 
+    public bool multiBullet;
     public bool piercesEnemies;
     public int enemyPierceAmount;
 

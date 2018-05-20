@@ -441,7 +441,7 @@ public class PlayerControllerAction : MonoBehaviour {
     {
         GameObject projectile = Instantiate(bulletObject, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
 
-        if (projectile.GetComponent<Tags>() && projectile.GetComponent<Tags>().multiBullet)
+        if (projectile.GetComponent<Tags>() && gun.bulletType.multiBullet)
         {
             for (int i = 0; i < projectile.transform.childCount; i++)
             {

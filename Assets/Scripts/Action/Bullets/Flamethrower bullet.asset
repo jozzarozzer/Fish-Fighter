@@ -14,6 +14,7 @@ MonoBehaviour:
   bulletType: pistol
   damage: 1
   velocity: 60
+  multiBullet: 0
   piercesEnemies: 1
   enemyPierceAmount: 1
   bulletObj: {fileID: 1317178027526888, guid: 9083b5dce4faf044188628810baccc76, type: 2}
