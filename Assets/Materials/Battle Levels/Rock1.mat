@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Ground 1-2
+  m_Name: Rock1
   m_Shader: {fileID: 4800000, guid: eabd50038d81f594b8eee0f01320edf4, type: 3}
   m_ShaderKeywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 4
@@ -69,13 +69,13 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _Darkness: 1
+    - _Darkness: 0.64
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 0
-    - _Glossiness: 0.58
+    - _Glossiness: 0
     - _GlossyReflections: 1
-    - _HoriBool: 1
+    - _HoriBool: 0
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 200
@@ -99,13 +99,13 @@ Material:
     - _YNormalCutoff: 0.4
     - _ZWrite: 1
     m_Colors:
-    - _BColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BColor: {r: 0.23062584, g: 0.13721885, b: 0.3455882, a: 0.5882353}
     - _CausticsColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.50735295, g: 0.4789494, b: 0.41782007, a: 0.5882353}
+    - _Color: {r: 0.616, g: 0.29444024, b: 0.32770494, a: 0.5882353}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FColor: {r: 1, g: 1, b: 1, a: 1}
-    - _LColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TColor: {r: 0.50735295, g: 0.47421548, b: 0.40289792, a: 0.5882353}
-    - _UColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FColor: {r: 0.5411981, g: 0.6427112, b: 0.8088235, a: 0.5882353}
+    - _LColor: {r: 0.23782368, g: 0.22837369, b: 0.35294116, a: 0.5882353}
+    - _RColor: {r: 0.1313686, g: 0.12283736, b: 0.2352941, a: 0.5882353}
+    - _TColor: {r: 0.22837369, g: 0.26015985, b: 0.35294116, a: 0.5882353}
+    - _UColor: {r: 0.23782368, g: 0.22837369, b: 0.35294116, a: 0.5882353}
     - _WaveOffset: {r: 50, g: 0, b: 0, a: 1}

@@ -39,6 +39,8 @@ public class ProjectileScript : MonoBehaviour
 
     void Start()
     {
+        lifetime = bulletData.lifeTime;
+
         rigidBody = gameObject.GetComponent<Rigidbody>();
         StartCoroutine(deathTimer(lifetime));
         transform.eulerAngles += rotation;
@@ -58,7 +60,7 @@ public class ProjectileScript : MonoBehaviour
         if (bulletBehaviour != null) { customBehaviour = true; }
         else { customBehaviour = false; }
 
-        startTime = Time.time;
+        startTime = Time.time;        
     }
 
     void Update()
@@ -130,7 +132,8 @@ public class ProjectileScript : MonoBehaviour
     void HitEffect(GameObject hitEffectIN)
     {
         GameObject hitEffect = Instantiate(hitEffectIN, transform.position, Quaternion.identity);
-        hitEffect.transform.LookAt(positionLastFrame);
+        hitEffect.transform.LookAt(previousPositions[1]);
+
         //could possibly instead just make the hit 
         //effects point in the direction of the velocity, 
         //and then if I want one (like this one) to be 

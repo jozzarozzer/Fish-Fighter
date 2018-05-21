@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2bf2143a6449114aba82384ddea6969, type: 3}
-  m_Name: Assault Behaviour
+  m_Name: Test Behaviour
   m_EditorClassIdentifier: 
   drag: 1
-  wave: 1
-  waveMult: 1
-  dragAmount: 0.01
+  wave: 0
+  waveMult: 3
+  dragAmount: 0.025

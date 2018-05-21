@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c73c5b5e76c00914386db86083aca32f, type: 3}
-  m_Name: Assault Rifle
+  m_Name: Test Gun
   m_EditorClassIdentifier: 
   gunType: 
-  fireRate: 0.1
-  burstFireRate: 0.1
-  burstFireAmount: 3
-  recoil: 2
-  price: 1000
-  level: 5
-  ammoMax: 30
+  fireRate: 0.05
+  burstFireRate: 0
+  burstFireAmount: 0
+  recoil: 1
+  price: 0
+  level: 1
+  ammoMax: 200
   reloadTime: 1
   canHold: 1
   burstFire: 0
-  bulletType: {fileID: 11400000, guid: 9d995c70c92a5c745ac2311ecc002312, type: 2}
+  bulletType: {fileID: 0}

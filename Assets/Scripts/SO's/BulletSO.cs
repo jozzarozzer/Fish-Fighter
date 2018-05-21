@@ -8,6 +8,7 @@ public class BulletSO : ScriptableObject
     public string bulletType;
     public float damage;
     public float velocity;
+    public float lifeTime;
 
     public bool multiBullet;
     public bool piercesEnemies;

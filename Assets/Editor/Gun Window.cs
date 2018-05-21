@@ -423,6 +423,13 @@ public class GunWindow : EditorWindow
 
             EditorGUILayout.BeginHorizontal();
 
+            GUILayout.Label("Lifetime", GUILayout.Width(bulletSection.width / 2));
+            bulletData.lifeTime = EditorGUILayout.FloatField(bulletData.lifeTime);
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+
             GUILayout.Label("Bullet Object", GUILayout.Width(bulletSection.width / 2));
             bulletData.bulletObj = (GameObject)EditorGUILayout.ObjectField(bulletData.bulletObj, typeof(GameObject), false);
 

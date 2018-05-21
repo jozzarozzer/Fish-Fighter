@@ -189,7 +189,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 591376ebc3d4bba458409882583c9aef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,14 +219,14 @@ TrailRenderer:
       - serializedVersion: 2
         time: 0
         value: 1
-        inSlope: -3.417284
-        outSlope: -3.417284
+        inSlope: 0.042530444
+        outSlope: 0.042530444
         tangentMode: 0
       - serializedVersion: 2
         time: 1
         value: 0
-        inSlope: -0.29663926
-        outSlope: -0.29663926
+        inSlope: -0.055777684
+        outSlope: -0.055777684
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -3680,7 +3680,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 591376ebc3d4bba458409882583c9aef, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
